@@ -18,13 +18,13 @@
 
     var chatSocket = new WebSocket(
         'ws://' + window.location.host +
-        '/ws/chat' + roomname + '/'
+        '/ws/chat/' + roomName + '/'
     );
 
     chatSocket.onmessage = function(e){
-        var sata = JSON.parse(e.data);
+        var data = JSON.parse(e.data);
         var message = data['message'];
-        document.querySelector('chat-log').value += (message + '\n');
+        document.querySelector('#chat-log').value += (message + '\n');
     };
 
     chatSocket.onclose = function(e){
@@ -40,13 +40,13 @@
     };
 
     document.querySelector('#chat-message-submit').onclick = function(e){
-        var messageinputDom = document.querySelector('#chat-message-input');
-        var message = messageinputDom.value;
+        var messageInputDom = document.querySelector('#chat-message-input');
+        var message = messageInputDom.value;
         chatSocket.send(JSON.stringify({
             'message':message
         }));
 
-        messageinputDom.value = '';
+        messageInputDom.value = '';
 
     };
     
